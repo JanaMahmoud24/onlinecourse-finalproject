@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Question, Submission, Choice
+from .models import Question, Submission, Choice, Learner
 
 def submit(request):
     if request.method == "POST":
-        submission = Submission.objects.create()
+        # Example: get first learner (for simplicity)
+        learner = Learner.objects.first()
+        submission = Submission.objects.create(enrollment=learner)
         selected_choices = request.POST.getlist('choices')
         for choice_id in selected_choices:
             choice = Choice.objects.get(id=choice_id)
